@@ -64,11 +64,10 @@
                                 <label class="form-label">Shopify Product Area</label>
                                 <select class="form-control" name="shopify_product">
                                     <option value="">Select product...</option>
-                                    {% set products = ["Admin API", "Storefront API", "Webhooks", "Payments", "App Development", "Partner API", "Shopify CLI", "Bulk Operations", "Other"] %}
-                                    {% for product in products %}
+                                    {% for product in config.shopify_products %}
                                         <option value="{{ product }}" 
                                                 {% if knowledge.shopify_product == product %}selected{% endif %}>
-                                            {{ product }}
+                                            {{ product.replace('-', ' ').replace('_', ' ').title() }}
                                         </option>
                                     {% endfor %}
                                 </select>

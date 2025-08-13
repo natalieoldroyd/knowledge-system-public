@@ -156,6 +156,8 @@ def edit_knowledge(knowledge_id):
         except Exception as e:
             flash(f'Error updating knowledge: {str(e)}', 'error')
     
+    # Debug config
+    print(f"DEBUG: Shopify products in config: {config['shopify_products']}")
     return render_template('edit.html', knowledge=knowledge, config=config)
 
 @app.route('/knowledge/<int:knowledge_id>/delete', methods=['POST'])
@@ -478,6 +480,6 @@ def create_templates():
         f.write(view_template)
 
 if __name__ == '__main__':
-    create_templates()
+    # create_templates()  # Commented out to preserve custom template changes
     print("🌐 Starting web interface at http://localhost:5000")
     app.run(debug=True, host='127.0.0.1', port=5000)
