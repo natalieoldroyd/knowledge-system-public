@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ knowledge.title }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5>📝 {{ knowledge.title }}</h5>
+        <small class="text-muted">
+            {{ knowledge.category }} • {{ knowledge.created_at }}
+            {% if knowledge.shopify_product %} • {{ knowledge.shopify_product }}{% endif %}
+        </small>
+    </div>
+    <div class="card-body">
+        <h6>❗ Problem:</h6>
+        <p>{{ knowledge.problem }}</p>
+        
+        <h6>✅ Solution:</h6>
+        <div>{{ knowledge.solution | replace('
+', '<br>') | safe }}</div>
+        
+        {% if knowledge.code_examples %}
+            <h6>💻 Code Examples:</h6>
+            <div class="code-block">{{ knowledge.code_examples }}</div>
+        {% endif %}
+        
+        {% if knowledge.tags %}
+            <h6>🏷️ Tags:</h6>
+            {% for tag in knowledge.tags.split(',') %}
+                <span class="tag">{{ tag.strip() }}</span>
+            {% endfor %}
+        {% endif %}
+        
+        {% if knowledge.notes %}
+            <h6>📋 Notes:</h6>
+            <p>{{ knowledge.notes }}</p>
+        {% endif %}
+        
+        <hr>
+        <p><small>📊 Used {{ knowledge.usage_count }} times • Source: {{ knowledge.source }}</small></p>
+        
+        <div class="mt-3">
+            <a href="{{ url_for('edit_knowledge', knowledge_id=knowledge.id) }}"
+               class="btn btn-warning btn-sm">✏️ Edit</a>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-sm ms-2">← Back</a>
+        </div>
+        
+        <form method="POST" action="{{ url_for('use_knowledge', knowledge_id=knowledge.id) }}" class="d-inline">
+            <button type="submit" name="helpful" value="true" class="btn btn-success btn-sm">👍 Helpful</button>
+            <button type="submit" name="helpful" value="false" class="btn btn-outline-secondary btn-sm">👎 Not Helpful</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

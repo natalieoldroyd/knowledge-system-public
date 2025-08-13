@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Search Knowledge{% endblock %}
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header"><h5>🔍 Search Knowledge</h5></div>
+    <div class="card-body">
+        <form method="GET">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="q" value="{{ query }}" placeholder="Search terms...">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="category">
+                        <option value="">All categories</option>
+                        {% for category in config.categories %}
+                            <option value="{{ category }}" {{ 'selected' if category == category }}>
+                                {{ category.replace('_', ' ').title() }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if results %}
+<div class="card">
+    <div class="card-header"><h5>Results ({{ results|length }})</h5></div>
+    <div class="card-body">
+        {% for knowledge in results %}
+            <div class="border-bottom pb-3 mb-3">
+                <h6><a href="{{ url_for('view_knowledge', knowledge_id=knowledge.id) }}">{{ knowledge.title }}</a></h6>
+                <p class="text-muted">{{ knowledge.problem[:200] }}...</p>
+                <small>
+                    <span class="tag">{{ knowledge.category }}</span>
+                    {% if knowledge.shopify_product %}
+                        <span class="tag">{{ knowledge.shopify_product }}</span>
+                    {% endif %}
+                    • Used {{ knowledge.usage_count }} times
+                </small>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

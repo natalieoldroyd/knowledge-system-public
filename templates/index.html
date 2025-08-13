@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Knowledge System{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header"><h5>📊 Statistics</h5></div>
+            <div class="card-body">
+                <p><strong>Total Knowledge:</strong> {{ stats.total_count }}</p>
+                <p><strong>Recent (7 days):</strong> {{ stats.recent_additions }}</p>
+                <h6>Categories:</h6>
+                {% for category, count in stats.categories.items() %}
+                    <span class="tag">{{ category }}: {{ count }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>🕒 Recent Knowledge</h5>
+                <a href="{{ url_for('add_knowledge') }}" class="btn btn-primary btn-sm float-end">Add New</a>
+            </div>
+            <div class="card-body">
+                {% for knowledge in recent_knowledge %}
+                    <div class="border-bottom pb-2 mb-2">
+                        <h6><a href="{{ url_for('view_knowledge', knowledge_id=knowledge.id) }}">{{ knowledge.title }}</a></h6>
+                        <small class="text-muted">{{ knowledge.category }} • {{ knowledge.created_at }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if all_tags %}
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>🏷️ All Tags</h5>
+                <small class="text-muted">Review your tags to avoid duplicates and maintain consistency</small>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap gap-2">
+                    {% for tag_info in all_tags %}
+                        <span class="tag" style="font-size: {% if tag_info.count > 3 %}1.1em{% elif tag_info.count > 1 %}1.0em{% else %}0.9em{% endif %};">
+                            {{ tag_info.tag }} <span class="badge bg-secondary">{{ tag_info.count }}</span>
+                        </span>
+                    {% endfor %}
+                </div>
+                {% if all_tags|length > 20 %}
+                    <div class="mt-2">
+                        <small class="text-muted">
+                            💡 Consider consolidating similar tags to improve searchability
+                        </small>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

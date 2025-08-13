@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Add Knowledge{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-header"><h5>📝 Add New Knowledge</h5></div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Issue Title *</label>
+                <input type="text" class="form-control" name="title" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Problem Description *</label>
+                <textarea class="form-control" name="problem" rows="4" required></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Solution Steps *</label>
+                <textarea class="form-control" name="solution" rows="6" required></textarea>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-control" name="category">
+                            {% for category in config.categories %}
+                                <option value="{{ category }}">{{ category.replace('_', ' ').title() }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Shopify Product</label>
+                        <select class="form-control" name="shopify_product">
+                            <option value="">Select product...</option>
+                            {% for product in config.shopify_products %}
+                                <option value="{{ product }}">{{ product }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Code Examples</label>
+                <textarea class="form-control font-monospace" name="code_examples" rows="4"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Tags</label>
+                <input type="text" class="form-control" name="tags" placeholder="comma, separated, tags">
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" name="notes" rows="3"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">💾 Save Knowledge</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

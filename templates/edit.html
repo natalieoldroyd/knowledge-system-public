@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}Edit: {{ knowledge.title }} - Backend Support{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">✏️ Edit Knowledge Entry</h5>
+                <a href="{{ url_for('view_knowledge', knowledge_id=knowledge.id) }}" 
+                   class="btn btn-outline-dark btn-sm">← Cancel</a>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label required">Issue Title</label>
+                        <input type="text" class="form-control" name="title" required 
+                               value="{{ knowledge.title }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label required">Problem Description</label>
+                        <textarea class="form-control" name="problem" rows="4" required>{{ knowledge.problem }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label required">Solution Steps</label>
+                        <textarea class="form-control" name="solution" rows="6" required>{{ knowledge.solution }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label required">Categories</label>
+                        <div class="row">
+                            {% set categories_list = [
+                                'app-proxy', 'orders-api', 'returns-api', 'fulfillments-api',
+                                'products-api', 'shopify-cli', 'webhooks', 'payments-api',
+                                'multipass', 'customer-account-api', 'bulk-operations', 'media-api',
+                                'app-billing', 'app-configuration', 'oxygen-api', 'storefront-api',
+                                'admin-api', 'general'
+                            ] %}
+                            
+                            {% set current_categories = knowledge.categories|from_json if knowledge.categories.startswith('[') else [knowledge.categories] %}
+                            
+                            {% for category in categories_list %}
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input category-checkbox" type="checkbox" 
+                                               value="{{ category }}" id="cat_{{ loop.index }}"
+                                               {% if category in current_categories %}checked{% endif %}>
+                                        <label class="form-check-label" for="cat_{{ loop.index }}">
+                                            {{ category }}
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" name="categories" id="categories_hidden" 
+                               value="{% if current_categories %}{{ current_categories|join(',') }}{% endif %}">
+                        <small class="form-text text-muted">Select all relevant categories (multiple allowed)</small>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Shopify Product Area</label>
+                                <select class="form-control" name="shopify_product">
+                                    <option value="">Select product...</option>
+                                    {% set products = ["Admin API", "Storefront API", "Webhooks", "Payments", "App Development", "Partner API", "Shopify CLI", "Bulk Operations", "Other"] %}
+                                    {% for product in products %}
+                                        <option value="{{ product }}" 
+                                                {% if knowledge.shopify_product == product %}selected{% endif %}>
+                                            {{ product }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">API Version</label>
+                                <input type="text" class="form-control" name="api_version" 
+                                       value="{{ knowledge.api_version or '' }}" 
+                                       placeholder="e.g., 2025-07">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Code Examples / API Calls</label>
+                        <textarea class="form-control font-monospace" name="code_examples" rows="5">{{ knowledge.code_examples or '' }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Tags</label>
+                        <input type="text" class="form-control" name="tags" 
+                               value="{{ knowledge.tags or '' }}"
+                               placeholder="webhook-delivery, cors, troubleshooting">
+                        <small class="form-text text-muted">Comma-separated keywords for easier searching</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Additional Notes</label>
+                        <textarea class="form-control" name="notes" rows="3">{{ knowledge.notes or '' }}</textarea>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('view_knowledge', knowledge_id=knowledge.id) }}" 
+                           class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-warning">💾 Update Knowledge</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Handle multiple category selection
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.category-checkbox');
+    const hiddenInput = document.getElementById('categories_hidden');
+    
+    // Set initial state based on hidden input value
+    const initialCategories = hiddenInput.value.split(',').map(c => c.trim()).filter(c => c);
+    checkboxes.forEach(checkbox => {
+        if (initialCategories.includes(checkbox.value)) {
+            checkbox.checked = true;
+        }
+    });
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const selected = Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            hiddenInput.value = selected.join(',');
+        });
+    });
+    
+    // Set default category if none selected
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        if (hiddenInput.value === '') {
+            hiddenInput.value = 'general';
+        }
+    });
+});
+</script>
+{% endblock %}

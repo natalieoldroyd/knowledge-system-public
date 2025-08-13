@@ -1,0 +1,53 @@
+{
+  "database": {
+    "path": "knowledge.db",
+    "auto_backup": true,
+    "backup_interval_days": 7
+  },
+  "categories": [
+    "app-proxy",
+    "orders-api", 
+    "returns-api",
+    "fulfillments-api",
+    "products-api",
+    "shopify-cli",
+    "webhooks",
+    "payments-api",
+    "multipass",
+    "customer-account-api",
+    "bulk-operations",
+    "media-api",
+    "app-billing",
+    "app-configuration",
+    "oxygen-api",
+    "storefront-api",
+    "admin-api",
+    "general"
+  ],
+  "shopify_products": [
+    "Admin API",
+    "Storefront API",
+    "Webhooks",
+    "Checkout",
+    "Payments",
+    "POS",
+    "Shopify Plus",
+    "Partners",
+    "App Development",
+    "Themes",
+    "Shipping",
+    "Inventory",
+    "General Support"
+  ],
+  "ai_extraction": {
+    "enabled": false,
+    "provider": "anthropic",
+    "model": "claude-3-5-sonnet-20241022",
+    "confidence_threshold": 0.6
+  },
+  "export": {
+    "auto_export": false,
+    "export_path": "backups/",
+    "format": "json"
+  }
+}
