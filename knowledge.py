@@ -294,6 +294,33 @@ class KnowledgeDB:
         conn.close()
         return [{'tag': tag, 'count': count} for tag, count in sorted_tags]
     
+    def delete_knowledge(self, knowledge_id: int) -> bool:
+        """Delete a knowledge entry and its associated data."""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        try:
+            # Delete from usage table first (foreign key constraint)
+            cursor.execute('DELETE FROM knowledge_usage WHERE knowledge_id = ?', (knowledge_id,))
+            
+            # Delete from FTS table
+            cursor.execute('DELETE FROM knowledge_fts WHERE rowid = ?', (knowledge_id,))
+            
+            # Delete from main table
+            cursor.execute('DELETE FROM knowledge WHERE id = ?', (knowledge_id,))
+            
+            conn.commit()
+            success = cursor.rowcount > 0
+            
+        except Exception as e:
+            conn.rollback()
+            success = False
+            print(f"Error deleting knowledge: {e}")
+        finally:
+            conn.close()
+        
+        return success
+    
     def export_knowledge(self, file_path: str):
         """Export all knowledge to JSON file."""
         conn = sqlite3.connect(self.db_path)

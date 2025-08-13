@@ -158,6 +158,27 @@ def edit_knowledge(knowledge_id):
     
     return render_template('edit.html', knowledge=knowledge, config=config)
 
+@app.route('/knowledge/<int:knowledge_id>/delete', methods=['POST'])
+def delete_knowledge(knowledge_id):
+    """Delete existing knowledge."""
+    knowledge = db.get_knowledge(knowledge_id=knowledge_id)
+    if not knowledge:
+        flash('Knowledge not found', 'error')
+        return redirect(url_for('index'))
+    
+    try:
+        # Get title before deletion (knowledge is a dict, not an object)
+        title = knowledge['title'] if isinstance(knowledge, dict) else knowledge.title
+        success = db.delete_knowledge(knowledge_id)
+        if success:
+            flash(f'Knowledge "{title}" deleted successfully!', 'success')
+        else:
+            flash('Failed to delete knowledge entry', 'error')
+    except Exception as e:
+        flash(f'Error deleting knowledge: {str(e)}', 'error')
+    
+    return redirect(url_for('index'))
+
 @app.route('/api/search')
 def api_search():
     """API endpoint for search."""

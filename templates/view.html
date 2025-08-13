@@ -37,12 +37,6 @@
         <hr>
         <p><small>📊 Used {{ knowledge.usage_count }} times • Source: {{ knowledge.source }}</small></p>
         
-        <div class="mt-3">
-            <a href="{{ url_for('edit_knowledge', knowledge_id=knowledge.id) }}"
-               class="btn btn-warning btn-sm">✏️ Edit</a>
-            <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-sm ms-2">← Back</a>
-        </div>
-        
         <form method="POST" action="{{ url_for('use_knowledge', knowledge_id=knowledge.id) }}" class="d-inline">
             <button type="submit" name="helpful" value="true" class="btn btn-success btn-sm">👍 Helpful</button>
             <button type="submit" name="helpful" value="false" class="btn btn-outline-secondary btn-sm">👎 Not Helpful</button>

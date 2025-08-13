@@ -32,33 +32,4 @@
         </div>
     </div>
 </div>
-
-{% if all_tags %}
-<div class="row mt-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h5>🏷️ All Tags</h5>
-                <small class="text-muted">Review your tags to avoid duplicates and maintain consistency</small>
-            </div>
-            <div class="card-body">
-                <div class="d-flex flex-wrap gap-2">
-                    {% for tag_info in all_tags %}
-                        <span class="tag" style="font-size: {% if tag_info.count > 3 %}1.1em{% elif tag_info.count > 1 %}1.0em{% else %}0.9em{% endif %};">
-                            {{ tag_info.tag }} <span class="badge bg-secondary">{{ tag_info.count }}</span>
-                        </span>
-                    {% endfor %}
-                </div>
-                {% if all_tags|length > 20 %}
-                    <div class="mt-2">
-                        <small class="text-muted">
-                            💡 Consider consolidating similar tags to improve searchability
-                        </small>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
 {% endblock %}
