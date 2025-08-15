@@ -2,6 +2,14 @@
 
 A collaborative knowledge management system for capturing and organizing support solutions across teams.
 
+## 🎥 Demo Video
+
+See the knowledge system in action:
+
+https://github.com/user-attachments/assets/15-20-ju3e6-xipqr.mp4
+
+*Video shows the clickable categories, tag filtering, and navigation features.*
+
 ## Prerequisites
 
 - Python 3.6 or higher
