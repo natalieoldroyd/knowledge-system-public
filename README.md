@@ -4,11 +4,12 @@ A collaborative knowledge management system for capturing and organizing support
 
 ## 🎥 Demo Video
 
-See the knowledge system in action:
-
-https://github.com/user-attachments/assets/15-20-ju3e6-xipqr.mp4
-
-*Video shows the clickable categories, tag filtering, and navigation features.*
+*Demo video coming soon! The video will showcase:*
+- ✅ Clickable categories for filtering entries
+- ✅ Tag-based filtering and navigation  
+- ✅ Cross-linking between categories and tags
+- ✅ Card-based results display
+- ✅ Easy knowledge entry and browsing
 
 ## Prerequisites
 
@@ -31,20 +32,7 @@ https://github.com/user-attachments/assets/15-20-ju3e6-xipqr.mp4
    python --version  # Should show Python 3.6+
    ```
 
-## 🎥 Demo Video
-
-See the knowledge system in action:
-
-https://github.com/user-attachments/assets/15-20-ju3e6-xipqr.mp4
-
-*Video shows the clickable categories, tag filtering, and navigation features.*
-
-## Prerequisites
-
-- Python 3.6 or higher
-- pip (Python package installer)
-
-## Installation
+## Quick Start
 
 1. **Install Dependencies:**
    ```bash
