@@ -4,12 +4,11 @@ A collaborative knowledge management system for capturing and organizing support
 
 ## 🎥 Demo Video
 
-*Demo video coming soon! The video will showcase:*
-- ✅ Clickable categories for filtering entries
-- ✅ Tag-based filtering and navigation  
-- ✅ Cross-linking between categories and tags
-- ✅ Card-based results display
-- ✅ Easy knowledge entry and browsing
+See the knowledge system in action:
+
+https://github.com/natalieoldroyd/knowledge-system-public/raw/main/assets/videos/15-20-ju3e6-xipqr.mp4
+
+*Video shows the clickable categories, tag filtering, and navigation features.*
 
 ## Prerequisites
 
