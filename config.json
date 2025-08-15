@@ -9,7 +9,8 @@
     "storefront-api", 
     "partners",
     "oxygen-api",
-    "general"
+    "general",
+    "authentication"
   ],
   "shopify_products": [
     "shopify-cli",

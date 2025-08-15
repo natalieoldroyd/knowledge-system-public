@@ -104,6 +104,32 @@ def search():
                          product=product,
                          config=config)
 
+@app.route('/category/<category_name>')
+def category_filter(category_name):
+    """Filter knowledge by category."""
+    results = db.search_knowledge(categories=[category_name])
+    stats = db.get_stats()
+    category_count = stats['categories'].get(category_name, 0)
+    
+    return render_template('category_results.html', 
+                         results=results, 
+                         category_name=category_name,
+                         category_count=category_count,
+                         config=config)
+
+@app.route('/tag/<tag_name>')
+def tag_filter(tag_name):
+    """Filter knowledge by tag."""
+    results = db.search_knowledge(tags=[tag_name])
+    all_tags = db.get_all_tags()
+    tag_count = next((tag['count'] for tag in all_tags if tag['tag'] == tag_name), 0)
+    
+    return render_template('tag_results.html', 
+                         results=results, 
+                         tag_name=tag_name,
+                         tag_count=tag_count,
+                         config=config)
+
 @app.route('/knowledge/<int:knowledge_id>')
 def view_knowledge(knowledge_id):
     """View specific knowledge."""

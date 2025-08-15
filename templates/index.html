@@ -10,7 +10,9 @@
                 <p><strong>Recent (7 days):</strong> {{ stats.recent_additions }}</p>
                 <h6>Categories:</h6>
                 {% for category, count in stats.categories.items() %}
-                    <span class="tag">{{ category }}: {{ count }}</span>
+                    <a href="{{ url_for('category_filter', category_name=category) }}" class="text-decoration-none">
+                        <span class="tag bg-primary text-white border-0 me-1 mb-1" style="cursor: pointer;">{{ category }}: {{ count }}</span>
+                    </a>
                 {% endfor %}
             </div>
         </div>
@@ -45,9 +47,11 @@
             <div class="card-body">
                 <div class="d-flex flex-wrap gap-2">
                     {% for tag_info in all_tags %}
-                        <span class="badge bg-primary me-1 mb-1 {% if tag_info.count > 3 %}fs-6{% elif tag_info.count > 1 %}fs-7{% else %}fs-8{% endif %}">
-                            {{ tag_info.tag }} <span class="badge bg-light text-dark ms-1">{{ tag_info.count }}</span>
-                        </span>
+                        <a href="{{ url_for('tag_filter', tag_name=tag_info.tag) }}" class="text-decoration-none">
+                            <span class="badge bg-primary me-1 mb-1 {% if tag_info.count > 3 %}fs-6{% elif tag_info.count > 1 %}fs-7{% else %}fs-8{% endif %}" style="cursor: pointer;">
+                                {{ tag_info.tag }} <span class="badge bg-light text-dark ms-1">{{ tag_info.count }}</span>
+                            </span>
+                        </a>
                     {% endfor %}
                 </div>
                 {% if all_tags|length > 20 %}
