@@ -31,6 +31,35 @@ https://github.com/user-attachments/assets/15-20-ju3e6-xipqr.mp4
    python --version  # Should show Python 3.6+
    ```
 
+## 🎥 Demo Video
+
+See the knowledge system in action:
+
+https://github.com/user-attachments/assets/15-20-ju3e6-xipqr.mp4
+
+*Video shows the clickable categories, tag filtering, and navigation features.*
+
+## Prerequisites
+
+- Python 3.6 or higher
+- pip (Python package installer)
+
+## Installation
+
+1. **Install Dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+   Or manually install Flask:
+   ```bash
+   pip install flask
+   ```
+   
+2. **Verify Installation:**
+   ```bash
+   python --version  # Should show Python 3.6+
+   ```
+
 ## Quick Start
 
 1. **Navigate to Directory:**
