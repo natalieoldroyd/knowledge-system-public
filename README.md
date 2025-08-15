@@ -10,70 +10,46 @@ https://github.com/natalieoldroyd/knowledge-system-public/raw/main/assets/videos
 
 *Video shows the clickable categories, tag filtering, and navigation features.*
 
-## Prerequisites
+## Quick Setup
 
-- Python 3.6 or higher
-- pip (Python package installer)
+1. **Clone Repository:**
+   ```bash
+   git clone https://github.com/natalieoldroyd/knowledge-system-public.git
+   cd knowledge-system-public
+   ```
 
-## Installation
-
-1. **Install Dependencies:**
+2. **Install Dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-   Or manually install Flask:
-   ```bash
-   pip install flask
-   ```
-   
-2. **Verify Installation:**
-   ```bash
-   python --version  # Should show Python 3.6+
-   ```
 
-## Quick Start
-
-1. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-   Or manually install Flask:
-   ```bash
-   pip install flask
-   ```
-   
-2. **Verify Installation:**
-   ```bash
-   python --version  # Should show Python 3.6+
-   ```
-
-## Quick Start
-
-1. **Navigate to Directory:**
-   ```bash
-   cd knowledge-system
-   ```
-
-2. **Start Web Interface:**
+3. **Run Application:**
    ```bash
    python web_interface.py
    ```
    Then open http://localhost:5000 in your browser
 
-3. **Add Knowledge (CLI):**
-   ```bash
-   python knowledge.py add "Webhook 403 errors" "CORS headers missing" "Add Access-Control-Allow-Origin header"
-   ```
+## Prerequisites
 
-4. **Search Knowledge (CLI):**
-   ```bash
-   python knowledge.py search "webhook"
-   ```
+- Python 3.6 or higher
+- pip (Python package installer)
+- Git (for cloning the repository)
 
-5. **List All (CLI):**
-   ```bash
-   python knowledge.py list
-   ```
+## CLI Usage Examples
+
+```bash
+# Add knowledge entry
+python knowledge.py add "Webhook 403 errors" "CORS headers missing" "Add Access-Control-Allow-Origin header"
+
+# Search knowledge
+python knowledge.py search "webhook"
+
+# List all entries
+python knowledge.py list
+
+# Get statistics
+python knowledge.py stats
+```
 
 ## Features
 
@@ -171,7 +147,7 @@ When you first run the application, these files are automatically created:
 ### Common Issues
 
 **"ModuleNotFoundError: No module named 'flask'"**
-- Solution: Install Flask using `pip install flask`
+- Solution: Run `pip install -r requirements.txt` from the project directory
 
 **"Permission denied" errors**
 - Solution: Ensure you have write permissions in the directory
@@ -183,20 +159,25 @@ When you first run the application, these files are automatically created:
 **Port already in use**
 - Solution: Change the port in `web_interface.py` (see Port Configuration section above)
 
-## Usage Examples
+## Advanced Usage
 
 ```bash
-# Add knowledge with category
-python knowledge.py add "API Rate Limiting" "Too many requests" "Implement exponential backoff" --category api_issue --tags "api,rate-limit,429"
+# Add knowledge with specific category and tags
+python knowledge.py add "API Rate Limiting" "Too many requests" "Implement exponential backoff" --category admin-api --tags "api,rate-limit,429"
 
 # Search by category
-python knowledge.py search --category webhook_problem
+python knowledge.py search --category webhooks
 
-# Export knowledge
+# Export knowledge backup
 python knowledge.py export knowledge_backup.json
-
-# Get stats
-python knowledge.py stats
 ```
+
+## Team Collaboration
+
+This knowledge system is designed for team use:
+- Share common solutions across support agents
+- Maintain consistency in troubleshooting approaches  
+- Build institutional knowledge over time
+- Quick reference for escalated API support
 
 
