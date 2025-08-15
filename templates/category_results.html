@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}{{ category_name.replace('_', ' ').title() }} - Knowledge System{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3>📂 {{ category_name.replace('_', ' ').title() }}</h3>
+        <p class="text-muted">{{ category_count }} entries in this category</p>
+    </div>
+    <div>
+        <a href="{{ url_for('index') }}" class="btn btn-outline-primary">← Back to Dashboard</a>
+        <a href="{{ url_for('add_knowledge') }}" class="btn btn-primary">Add New</a>
+    </div>
+</div>
+
+{% if results %}
+<div class="row">
+    {% for knowledge in results %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <a href="{{ url_for('view_knowledge', knowledge_id=knowledge.id) }}" class="text-decoration-none">
+                        {{ knowledge.title }}
+                    </a>
+                </h6>
+                <p class="card-text text-muted">{{ knowledge.problem[:150] }}{% if knowledge.problem|length > 150 %}...{% endif %}</p>
+                
+                <div class="d-flex flex-wrap gap-1 mb-2">
+                    {% set categories = knowledge.categories|from_json %}
+                    {% for cat in categories %}
+                        <span class="badge bg-secondary">{{ cat }}</span>
+                    {% endfor %}
+                    
+                    {% if knowledge.shopify_product %}
+                        <span class="badge bg-info">{{ knowledge.shopify_product }}</span>
+                    {% endif %}
+                </div>
+                
+                {% if knowledge.tags %}
+                <div class="d-flex flex-wrap gap-1 mb-2">
+                    {% for tag in knowledge.tags.split(',') %}
+                        <span class="badge bg-light text-dark">{{ tag.strip() }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <small class="text-muted">
+                    Created: {{ knowledge.created_at }}
+                    {% if knowledge.usage_count > 0 %}
+                        • Used {{ knowledge.usage_count }} times
+                    {% endif %}
+                </small>
+            </div>
+            <div class="card-footer bg-transparent">
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('view_knowledge', knowledge_id=knowledge.id) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    <a href="{{ url_for('edit_knowledge', knowledge_id=knowledge.id) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="mt-4 text-center">
+    <small class="text-muted">
+        Showing all {{ results|length }} entries in the {{ category_name.replace('_', ' ').title() }} category
+    </small>
+</div>
+
+{% else %}
+<div class="text-center mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h5>📭 No Entries Found</h5>
+            <p class="text-muted">There are no knowledge entries in the "{{ category_name.replace('_', ' ').title() }}" category yet.</p>
+            <a href="{{ url_for('add_knowledge') }}" class="btn btn-primary">Add First Entry</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
